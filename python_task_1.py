@@ -2,7 +2,7 @@
 import pandas as pd
 
 
-def generate_car_matrix(df)->pd.DataFrame:
+def generate_car_matrix(df):
     """
     Creates a DataFrame  for id combinations.
 
@@ -44,7 +44,7 @@ def get_type_count(df)->dict:
     return dict_result
 
 
-def get_bus_indexes(df)->list:
+def get_bus_indexes(df):
     """
     Returns the indexes where the 'bus' values are greater than twice the mean.
 
@@ -54,8 +54,8 @@ def get_bus_indexes(df)->list:
     Returns:
         list: List of indexes where 'bus' values exceed twice the mean.
     """
-    mean = dataframe['bus'].mean()
-    bus = dataframe['bus']
+    mean = df['bus'].mean()
+    bus = df['bus']
     return_index = []
     c = 0
     for i in bus:
@@ -67,7 +67,7 @@ def get_bus_indexes(df)->list:
     return return_index
 
 
-def filter_routes(df)->list:
+def filter_routes(df):
     """
     Filters and returns routes with average 'truck' values greater than 7.
 
@@ -77,8 +77,8 @@ def filter_routes(df)->list:
     Returns:
         list: List of route names with average 'truck' values greater than 7.
     """
-    truck = data['truck']
-    route = data['route']
+    truck = df['truck']
+    route = df['route']
     return_list = []
     c = 0
     for i in truck:
@@ -90,7 +90,7 @@ def filter_routes(df)->list:
     return return_list
 
 
-def multiply_matrix(matrix)->pd.DataFrame:
+def multiply_matrix(matrix):
     """
     Multiplies matrix values with custom conditions.
 
@@ -100,14 +100,14 @@ def multiply_matrix(matrix)->pd.DataFrame:
     Returns:
         pandas.DataFrame: Modified matrix with values multiplied based on custom conditions.
     """
-    index = (dataframe.index)
-    for i in dataframe.columns:
+    index = (matrix.index)
+    for i in matrix.columns:
         for j in index:
-            if (dataframe[i].loc[j] > 20) :
-                dataframe[i].loc[j] *= 0.75
+            if (matrix[i].loc[j] > 20) :
+                matrix[i].loc[j] *= 0.75
             else:
-                dataframe[i].loc[j] *= 1.25
-    return dataframe.round(1)
+                matrix[i].loc[j] *= 1.25
+    return matrix.round(1)
 
 
 
