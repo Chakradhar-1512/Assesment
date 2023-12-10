@@ -1,0 +1,86 @@
+import pandas as pd
+import numpy as np
+
+# Question 1
+data = pd.read_csv("dataset-1.csv")
+
+df = data[['id_1','id_2','car']] 
+
+def generate_car_matrix(data_frame):
+    # Create a pivot table using id_1 as index, id_2 as columns, and car as values
+    car_matrix = pd.pivot_table(df, values='car', index='id_1', columns='id_2', fill_value=0)
+    return car_matrix
+
+result_q1 = generate_car_matrix(original_df)
+
+result_q1
+
+# Question 2
+def get_type_count(dataframe):
+    cars = list(dataframe["car"])
+    new_column = []
+    for i in cars:
+        if i < 15 :
+            new_column.append("low")
+        elif i >15 and i <= 25 :
+            new_column.append("medium")
+        else:
+            new_column.append("high")
+    dict_car_type = {"low":new_column.count('low'), 'high':new_column.count('high'), 'medium':new_column.count('medium')}
+    keys = list(dict_car_type)
+    keys.sort()
+    dict_result = {i:dict_car_type[i] for i in keys}
+    dataframe['car_type'] = new_column
+    return dict_result
+    
+result_q2 = get_type_count(data)
+result_q2
+
+# Question 3 
+def get_bus_indexes(dataframe):
+    mean = dataframe['bus'].mean()
+    bus = dataframe['bus']
+    return_index = []
+    c = 0
+    for i in bus:
+        if i > (2 * mean) :
+            return_index.append(c)
+        else:
+            pass
+        c+=1
+    return return_index
+
+result_q3 = get_bus_indexes(data)
+print(result_q3)
+
+# Question 4
+def filter_routes(dataframe):
+    truck = data['truck']
+    route = data['route']
+    return_list = []
+    c = 0
+    for i in truck:
+        if i > 7 :
+            return_list.append(route[c])
+        else:
+            pass
+        c+=1
+    return return_list
+
+result_q4 = filter_routes(data)
+print(result_q4)
+
+# question 5
+def multiply_matrix(dataframe):
+    index = (dataframe.index)
+    for i in dataframe.columns:
+        for j in index:
+            if (dataframe[i].loc[j] > 20) :
+                dataframe[i].loc[j] *= 0.75
+            else:
+                dataframe[i].loc[j] *= 1.25
+    return dataframe.round(1)
+
+result_q5 = multiply_matrix(result_q1)
+result_q5
+        
